@@ -1,0 +1,22 @@
+<!DOCTYPE html>
+<html xmlns:th="https://www.thymeleaf.org">
+<head>
+<meta charset="ISO-8859-1">
+<title>MVC</title>
+<!-- <link rel="stylesheet" th:href="@{/css/bootstrap.min.css}" />
+<script type="text/javascript" th:sc="@{}/js/"></script> -->
+
+<link rel="stylesheet" th:href="@{/webjars/bootstrap/css/bootstrap.min.css}" />
+<link rel="stylesheet" th:href="@{/webjars/font-awesome/css/all.min.css}" />
+<script type="text/javascript" th:sc="@{/webjars/jquery/jquery.min.js}"></script>
+<script type="text/javascript" th:sc="@{/webjars/bootstrap/js/bootstrap.min.js}"></script>
+</head>
+<body>
+	<div class="container mt-4">
+		<h1 class="text-primary">String Page</h1>
+		<p th:text="${time}"></p>
+		Name: <span th:text="${username}"></span>
+		Age: <span th:text="${userage}"></span>
+	</div>
+</body>
+</html>

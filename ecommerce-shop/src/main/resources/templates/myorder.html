@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html lang="en"
+	xmlns:th="http://www.thymeleaf.org"
+	xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+	layout:decorate="~{storefront-template}"
+	th:with="title1='My Order History',title2='My Order'">
+<head>
+	<title>Login</title>
+	<th:block layout:fragment="css">
+		<link rel="stylesheet" th:href="@{/app/css/style.css}" />
+	</th:block>
+</head>
+<body>
+	<section class="ftco-section ftco-cart content-color" layout:fragment="content-body">
+			<h3 class="text-center"><b>HISTORY OF ORDERS</b></h3>
+			<th:block th:each="order,count: ${orderList}">
+			<div class="d-flex justify-content-center mt-5">
+				<div style="width:50em;padding:25px;">
+					<div class="row">
+						<div class="col-6">
+							<small>PRODUCTS</small>
+							<ul>
+								<th:block th:each="item : ${order.items}">
+									<li><h5><b th:text="${item.product.name}"></b></h5></li> 
+								</th:block>
+							</ul>
+						</div>
+						<div class="col-3">
+							<small>ORDER DATE</small>
+							<h6><b th:text="${#temporals.format(order.created_at, 'MMM dd,yyyy HH:mm')}"></b></h6>
+						</div>
+						<div class="col-3">
+							<small>STATUS</small>
+							<h6>
+								<span th:if="${order.status.name()} == 'pending'" class="text-warning">Pending</span>
+                      			<span th:if="${order.status.name()} == 'received'" class="text-success">Received</span>
+                      			<span th:if="${order.status.name()} == 'cancelled'" class="text-danger">Cancelled</span>
+                      			<span th:if="${order.status.name()} == 'delivered'" class="text-primary">Delivered</span>
+							</h6>
+						</div>
+					</div>
+					<div class="row">
+						<div class="col-6"></div>
+						<div class="col-3">
+							<small>QUANTITY</small>
+							<h6><b th:text="${qtyList[count.index]}"></b></h6>
+						</div>
+						<div class="col-3">
+							<small>Total</small>
+							<h6><b th:text="${totalList[count.index]}"></b></h6>
+						</div>
+					</div>
+					<div class="row mt-2">
+						<div class="col-6"></div>
+						<div class="col-6">
+							<h6>Your Order will be delivered on <span th:text="${#temporals.format(deliveredDate[count.index],'MMM dd, yyyy')}"></span></h6>
+						</div>
+					</div>
+					<hr />
+				</div>
+			</div>	
+			</th:block>
+		</section>
+		<th:block layout:fragment="js">
+    	<script th:src="@{/app/js/cart.js}"></script>
+    	</th:block>
+</body>
+</html>

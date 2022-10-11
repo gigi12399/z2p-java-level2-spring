@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="en"
+	xmlns:th="http://www.thymeleaf.org"
+	xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity5">
+<head>
+	<title>Home</title>
+	<link rel="stylesheet" th:href="@{/css/bootstrap.min.css}" />
+</head>
+<body>
+	<div class="container">
+		<div class="row mt-3">
+			<div class="col-8">
+				<h3>Product List</h3>
+			</div>
+			<div class="col">
+				<a th:href="@{/product/add}" class="btn btn-primary">Add</a>
+			</div>
+			<div class="col" sec:authorize="isAuthenticated()">
+				<form th:action="@{/logout}" method="post">
+					<button class="btn btn-danger">Logout</button>
+				</form>
+			</div>
+		</div>
+		<hr />
+		<span sec:authentication="name" sec:authorize="isAuthenticated()">Bob</span>
+		<table class="table">
+			<tr>
+				<td>ID</td>
+				<td>Name</td>
+				<td>Price</td>
+				<td>Action</td>
+			</tr>
+			<th:block th:each="prod: ${productList}">
+				<tr>
+					<td th:text="${prod.id}"></td>
+					<td th:text="${prod.name}"></td>
+					<td th:text="${prod.price}"></td>
+					<td>
+						<a sec:authorize="hasRole('admin')" th:href="@{'/product/edit/' + ${prod.id}}" class="text-primary">Edit |</a>
+						<a sec:authorize="hasRole('admin')" th:href="@{'/product/delete/' + ${prod.id}}" class="text-danger"> Delete</a>
+					</td>
+				</tr>
+			</th:block>
+		</table>
+	</div>
+</body>
+</html>

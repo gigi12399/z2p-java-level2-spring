@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html lang="en"
+	xmlns:th="http://www.thymeleaf.org"
+	xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+	layout:decorate="~{adminfront-template}">
+<head>
+	<title>Seller</title>
+	
+</head>
+<body>
+	<th:block layout:fragment="profileImg">
+		<span class="mr-2 d-none d-lg-inline text-gray-600 small"><b th:text="${loginAdmin.name}"></b></span>
+		<img class="img-profile rounded-circle" th:src="@{${loginAdmin.photoPath}}">
+	</th:block>
+	<th:block layout:fragment="content-body">
+		<!-- Page Heading -->
+		<div class="row">
+			<div class="col-9">
+				<h1 class="h3 mb-2 text-gray-800">Sellers</h1>
+			</div>
+			<div class="col-3">
+				<a th:href="@{/register}" class="btn btn-primary btn-sm mx-3"><i class="fas fa-thin fa-plus"></i>  Create New</a>
+			</div>
+		</div>
+		
+		<!-- Category Table -->
+		<table class="table table-striped text-center mt-4" id="dataTable" width="100%" cellspacing="0">
+        	<thead>
+            	<tr>
+            		<th>No</th>
+                	<th>Seller</th>
+                    <th>Email</th>
+                	<th>Address</th>
+                 	<th>Status</th>
+                  	<th>Phone</th>
+                  	<th>Action</th>
+               	</tr>
+            </thead>
+         	<tbody>
+               	<th:block th:each="seller,state : ${sellerList}">
+                 	<tr>
+                 		<td th:text="${state.count}"></td>
+                      	<td>
+                      		<div class="row">
+                      			<div class="col-2"></div>
+                      			<div class="col-2">
+                      			 	<img width="40" height="40" th:src="@{${seller.photoPath}}" alt="" class="img-profile rounded-circle float-right"/>
+                      			</div>
+                      			<div class="col-5">
+                      				<div class="float-left">
+                      					<small th:text="${seller.name}"></small> <br />
+                      					<small>Seller ID: #<span th:text="${seller.id}"></span></small>
+                      				</div>
+                      			</div>
+                      			<div class="col-3"></div>
+                      			
+                      		</div>
+                      	</td>
+                      	<td th:text="${seller.email}"></td>
+                      	<td th:text="${seller.address}"></td>
+                      	<td>
+                      		<span th:if="${seller.status.name()} == 'active'" class="text-success">Active</span>
+                      		<span th:if="${seller.status.name()} == 'inactive'" class="text-warning">Inactive</span>
+                      		<span th:if="${seller.status.name()} == 'banned'" class="text-danger">Banned</span>
+                      	</td>
+                     	<td th:text="${seller.phone}"></td>
+                       	<td>
+                       		<a th:href="@{'/seller/banned/' + ${seller.id}}" class="btn btn-delete btn-sm">Banned</a>
+                        </td>
+                   	</tr>
+              	</th:block>
+          	</tbody>
+      	</table>
+        <div class="texting"></div>
+	</th:block>
+	<th:block layout:fragment="js">
+		<script type="text/javascript">
+				function goDetail(id){
+					location.href="/order/detail/" + id;
+				}
+		</script>
+	</th:block>
+	
+</body>
+</html>

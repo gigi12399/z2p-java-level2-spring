@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html lang="en"
+	xmlns:th="http://www.thymeleaf.org"
+	xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+	layout:decorate="~{adminfront-template}">
+<head>
+	<title>Product List</title>
+	
+</head>
+<body>
+	<th:block layout:fragment="profileImg">
+		<span class="mr-2 d-none d-lg-inline text-gray-600 small"><b th:text="${loginAdmin.name}"></b></span>
+		<img class="img-profile rounded-circle" th:src="@{${loginAdmin.photoPath}}">
+	</th:block>
+	<th:block layout:fragment="content-body">
+		<!-- Page Heading -->
+		<div class="row">
+			<div class="col-9 text-center">
+				<h1 class="h3 mb-2 text-gray-800">Product List</h1>
+				<hr />
+			</div>
+			<div class="col-3">
+				<a th:href="@{/product/add}" class="btn btn-primary btn-sm mx-3"><i class="fas fa-thin fa-plus"></i>  Create New</a>
+			</div>
+		</div>
+		
+		<!-- Products -->
+		<div class="row mt-4">
+			<th:block th:each="prod: ${productList}">
+				<div class="col-4 my-4">
+				<a th:href="@{'/product/detail/' + ${prod.id}}">
+					<div class="card mx-5" style="width: 14rem;">
+  						<img th:src="@{${prod.photoPath}}" class="card-img-top" alt="Photo">
+  					<div class="card-body">
+    					<p class="card-title text-dark" th:text="${prod.name}">Card title</p>
+    					<h5 class="card-text" style="color:black;" ><span th:text="${prod.price}"></span> Ks.</h5>
+    					<div class="row mt-2">
+    						<a th:href="@{'/product/edit/' + ${prod.id}}" class="btn btn-edit btn-sm col-5"><i class="fas fa-solid fa-pen fa-sm"></i><b> Edit</b></a>
+    						<div class="col-2"></div>
+    						<a th:href="@{'/product/delete/' + ${prod.id}}" class="btn btn-delete btn-sm col-5"><i class="fas fa-solid fa-trash fa-sm"></i><b> Delete</b></a>
+    					</div>
+  					</div>
+					</div>
+				</a>
+				</div>
+			</th:block>
+			
+		</div>
+		<!-- <div class="card-body">
+                            <div class="table-responsive">
+                                <table class="table table-bordered text-center" id="dataTable" width="100%" cellspacing="0">
+                                    <thead>
+                                        <tr>
+                                            <th>Name</th>
+                                            <th>Photo</th>
+                                            <th>Price</th>
+                                            <th>Category</th>
+                                            <th>Created Date</th>
+                                            <th>Description</th>
+                                            <th>Action</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                    	<th:block th:each="prod : ${productList}">
+                                    		<tr>
+                                            	<td th:text="${prod.name}"></td>
+                                            	<td>
+                                            		<img th:src="@{${prod.photoPath}}" alt="No Photo" width="35" height="35" />
+                                            	</td>
+                                            	<td th:text="${prod.price}"></td>
+                                            	<td th:text="${prod.category.name}"></td>
+                                            	<td th:text="${prod.created_at}"></td>
+                                            	<td th:text="${prod.description}"></td>
+                                            	<td>
+                                            		<a th:href="@{'/product/edit/' + ${prod.id}}" class=" text-primary">Edit</a> 
+                                            		<a th:href="@{'/product/delete/' + ${prod.id}}" class=" mx-3 text-danger">Delete</a>
+                                           	 	</td>
+                                        	</tr>
+                                    	</th:block>
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div> -->
+        
+	</th:block>
+</body>
+</html>

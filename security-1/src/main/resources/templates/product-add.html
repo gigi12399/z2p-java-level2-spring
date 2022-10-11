@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="en"
+	xmlns:th="http://www.thymeleaf.org">
+<head>
+	<title>Home | Add</title>
+	<link rel="stylesheet" th:href="@{/css/bootstrap.min.css}" />
+</head>
+<body>
+	<div class="container">
+		<div class="row mt-3">
+			<div class="col-8">
+				<h3>Add Product</h3>
+			</div>
+			<div class="col">
+				<a th:href="@{/}" class="btn btn-primary">Back</a>
+			</div>
+		</div>
+		<hr />
+		<form th:action="@{/product/save}" class="form col-6" th:object="${product}" method="post">
+			<input type="hidden" th:field="*{id}"/>
+			<div class="mb-3">
+				<label for="" class="form-label">Name</label>
+				<input type="text" class="form-control" th:field="*{name}" />
+			</div>
+			<div class="mb-3">
+				<label for="" class="form-label">Price</label>
+				<input type="number" class="form-control" th:field="*{price}"/>
+			</div>
+			<button class="btn btn-success w-50">Save</button>
+		</form>
+	</div>
+</body>
+</html>

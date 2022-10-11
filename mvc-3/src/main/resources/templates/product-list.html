@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+layout:decorate="~{master}">
+<head>
+<meta charset="ISO-8859-1">
+<title>Product</title>
+<!-- <th:block th:replace="common :: res"></th:block> -->
+</head>
+<body>
+	<h3 layout:fragment="sub-title">Product List</h3>
+	<a th:href="@{/products/add}" class="btn btn-success" layout:fragment="add-link">Add</a>		
+	<table layout:fragment="content-body" class="table">
+			<tr>
+				<th>ID</th>
+				<th>Name</th>
+				<th>Price</th>
+				<th>Category</th>
+				<th>Type</th>
+				<th>Image</th>
+				<th>Action</th>
+			</tr>
+			<th:block th:each="prod: ${productList}">
+				<tr>
+					<td th:text="${prod.id}"></td>
+					<td th:text="${prod.name}"></td>
+					<td th:text="${prod.price}"></td>
+					<td th:text="${prod.category} == null ? 'Null' : ${prod.category.name}"></td>
+					<td th:text="${prod.type}"></td>
+					<td>
+						<img th:src="@{${prod.photoPath}}" alt="No Photo" width="50" height="50"/>
+					</td>
+					<td>
+						<a th:href="@{'/products/edit/' + ${prod.id}}" class="btn btn-primary btn-sm">Edit</a> |
+						<a th:href="@{'/products/delete/' + ${prod.id}}" class="btn btn-danger btn-sm">Delete</a>
+					</td>
+				</tr>
+			</th:block>
+		</table>
+	</div>
+</body>
+</html>

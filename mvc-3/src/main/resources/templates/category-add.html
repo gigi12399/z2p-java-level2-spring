@@ -1,0 +1,21 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+layout:decorate="~{master}">
+<head>
+<meta charset="ISO-8859-1">
+<title>Category</title>
+</head>
+<body>
+	<h3 layout:fragment="sub-title"><th:block th:text="${category.id == 0 ? 'Add' : 'Edit'}"></th:block> Category</h3>
+	<a th:href="@{/categories}" class="btn btn-success">Back</a>
+	<form layout:fragment="content-body" th:action="@{/categories/save}" class="form col-5" th:object="${category}">
+		<input type="hidden" th:field="*{id}"/>
+		<div class="mb3">
+			<label for="" class="form-label">Name</label>
+			<input type="text" class="form-control" th:field="*{name}"/>
+		</div>
+		<button class="btn btn-success btn-sm float-end mt-3">Save</button>
+	</form>
+</body>
+</html>
