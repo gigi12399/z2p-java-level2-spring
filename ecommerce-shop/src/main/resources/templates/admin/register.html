@@ -1,0 +1,132 @@
+ <!DOCTYPE html>
+<html lang="en"
+	xmlns:th="http://www.thymeleaf.org"
+	xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+	layout:decorate="~{admin/adminfront-template}">
+<head>
+	<title>Register</title>
+	
+</head>
+<body>
+	<th:block layout:fragment="profileImg">
+		<span class="mr-2 d-none d-lg-inline text-gray-600 small"><b th:text="${loginAdmin.name}"></b></span>
+		<img class="img-profile rounded-circle" th:src="@{${loginAdmin.photoPath}}">
+	</th:block>
+	<th:block layout:fragment="content-body">
+		<!-- Page Heading -->
+		<div class="row">
+			<div class="col-10">
+				<h1 class="h3 mb-2 text-gray-800">User Register</h1>
+			</div>
+			<div class="col">
+				<a th:href="@{/admin/dashboard}" class="btn btn-primary btn-sm px-3"><i class="fas fa-solid fa-angle-left"></i>  Back</a>
+			</div>
+		</div>
+		
+		<hr />
+		
+		<!-- register Form -->
+		
+		<div class="d-flex justify-content-center">
+			<form th:action="@{/admin/user/save}" class="form user mb-5" method="post" th:object="${user}" enctype="multipart/form-data">
+			<input type="hidden" th:field="*{id}"/>
+			<input type="hidden" th:field="*{photo}" />
+			<div class="row">
+				<div class="col-md-6 col-12">
+					<div class="form-group">
+						<label for="" class="form-label">Name</label>
+             			<input th:field="*{name}" type="text" class="form-control form-control-user" placeholder="Enter Name..." required="required">
+            		</div>
+				</div>
+				<div class="col-md-6 col-12">
+					<div class="form-group">
+            			<label for="" class="form-label">Phone</label>
+             			<input th:field="*{phone}" type="number" class="form-control form-control-user" placeholder="Enter Phone..." required="required">
+            		</div>
+				</div>
+			</div>
+			
+			<div class="row">
+				<div class="col-md-6 col-12">
+					<div class="form-group">
+						<label for="" class="form-label">Email</label>
+             			<input th:field="*{email}" type="text" class="form-control form-control-user" placeholder="Enter Email..." required="required">
+            		</div>
+				</div>
+				<div class="col-md-6 col-12">
+					<div class="form-group">
+						<label for="" class="form-label">Address</label>
+             			<input th:field="*{address}" type="text" class="form-control form-control-user" placeholder="Enter Address..." required="required">
+            		</div>
+				</div>
+			</div>
+			
+			<div class="row">
+				<div class="col-md-6 col-12">
+					<div class="form-group">
+						<label for="" class="form-label">Password</label>
+             			<input id="pass1" th:field="*{password}" type="password" class="form-control form-control-user" placeholder="Enter Password..." required="required">
+            		</div>
+				</div>
+				<div class="col-md-6 col-12">
+					<div class="form-group">
+						<label for="" class="form-label">Re-enter Your Password</label>
+             			<input id="pass2" type="password" th:onchange="return check()" class="form-control form-control-user" placeholder="Enter Password again..." required="required">
+            			<small id="message" class="text-danger"></small>
+            		</div>
+				</div>
+			</div>
+         	<div class="row">
+         		<div class="col-md-6 col-12 form-group mt-2">
+         			<label for="">Role:</label> <br />
+         			<div class="form-check form-check-inline">
+  						<input class="form-check-input" type="radio" name="Role" id="admin" value="ADMIN" th:field="*{role}">
+  						<label class="form-check-label" for="admin">Admin</label>
+					</div>
+					<div class="form-check form-check-inline">
+  						<input class="form-check-input" type="radio" name="Role" id="seller" value="SELLER" th:field="*{role}">
+  						<label class="form-check-label" for="seller">Seller</label>
+					</div>
+					<div class="form-check form-check-inline">
+  						<input class="form-check-input" type="radio" name="Role" id="delivery_man" value="DELIVERYMAN" th:field="*{role}">
+  						<label class="form-check-label" for="delivery_man">Delivery Man</label>
+					</div>
+            	</div>
+            	<div class="col-md-6 col-12 form-group">
+            		<label for="formFile" class="form-label">Choose Photos</label>
+  					<input style="border:none;" class="form-control" type="file" id="formFile" name="uploadPhoto" required="required">
+				</div>
+         	</div>
+         	<div class="row mt-3">
+         		<div class="col-md-6 col-12 form-group">
+         			<label for="">Township</label> <br />
+         			<select th:field="*{availablePlace.id}" class="form-select form-township-select" style="width:250px;padding:15px;border-radius:10rem;background-color: #fff;border: 1px solid #d1d3e2;" aria-label="Default select example" >
+         				
+         				<th:block th:each="place: ${placeList}">
+         					<option th:value="${place.id}" th:text="${place.township} + ' , ' + ${place.city}"></option>
+         				</th:block>
+					</select>
+         		</div>
+         	</div>
+			
+            <button class="btn btn-primary btn-user px-5 mt-5 float-right">Register</button>
+       </form>
+		</div>
+		
+	</th:block>
+	<th:block layout:fragment="js">
+		<script>
+			function check(){
+				var pass1 = document.getElementById('pass1');
+				console.log(pass1);
+				var pass2 = document.getElementById('pass2');
+				if(pass1.value != pass2.value){
+					document.getElementById('message').innerHTML = "The two passwords must match!!";
+					
+				}
+			}
+		</script>
+	</th:block>
+	
+</body>
+</html>
