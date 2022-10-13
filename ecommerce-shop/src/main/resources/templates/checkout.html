@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html lang="en"
+xmlns:th="http://www.thymeleaf.org"
+xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+layout:decorate="~{storefront-template}"
+th:with="title1='checkout',title2='checkout'">
+<head>
+	<title>Title</title>
+</head>
+<body>
+	<section class="ftco-section" layout:fragment="content-body">
+      <div class="container">
+        <div class="row justify-content-center">
+          <div class="col-xl-8 ftco-animate">
+          
+          <!-- form start -->
+						<form action="#" class="billing-form" th:object="${loginUser}">
+							<h3 class="mb-4 billing-heading">Billing Details</h3>
+	          	<div class="row align-items-end">
+	          		<div class="col-md-6">
+	                <div class="form-group">
+	                	<label for="firstname">Name</label>
+	                  <input id="r-name" type="text" class="form-control" placeholder="Enter Name" th:field="*{name}">
+	                </div>
+	              </div>
+	              <div class="col-md-6">
+	                <div class="form-group">
+	                	<label for="email">Email</label>
+	                  <input id="r-email" type="email" class="form-control" placeholder="Enter Email" th:field="*{email}">
+	                </div>
+                </div>
+                <div class="w-100"></div>
+		            <div class="col-md-6">
+	                <div class="form-group">
+	                	<label for="phone">Phone</label>
+	                  <input id="r-phone" type="text" class="form-control" placeholder="Enter Phone" th:field="*{phone}">
+	                </div>
+	              </div>
+		            
+		            <div class="col-md-6">
+		            	<div class="form-group">
+	                	<label for="streetaddress">Address</label>
+	                  <input id="r-address" type="text" class="form-control" placeholder="House Address" th:field="*{address}">
+	                </div>
+		            </div>
+		            <div class="col-md-6">
+		            	<div class="form-group">
+		            		<label for="">Township</label> <br />
+         					<select th:field="*{availablePlace.id}" id="r-township" class="form-select choose_township" style="width:350px;padding:15px;background-color: #fff;border: 1px solid #d1d3e2;" aria-label="Default select example" >
+         						<th:block th:each="place: ${placeList}">
+         						<option th:value="${place.id}" th:text="${place.township} + ' , ' + ${place.city}"></option>
+         						</th:block>
+							</select>
+		            	</div>
+		            </div>
+	            </div>
+	            
+	          </form>
+	          <!--Form  END -->
+	          
+	          <!-- Total Card -->
+	          <div class="row mt-5 pt-3 d-flex">
+	          <div class="col-md-2"></div>
+	          	<div class="col-md-8 d-flex">
+	          		<div class="cart-detail cart-total bg-light p-3 p-md-4 text-center">
+	          			<h3 class="billing-heading mb-4">Cart Total</h3>
+	          			<p class="d-flex">
+		    						<span>Subtotal</span>
+		    						<span class="total">$20.60</span>
+		    					</p>
+		    					<p class="d-flex">
+		    						<span>Delivery</span>
+		    						<span class="deliveryFees">0.00 ks.</span>
+		    					</p>
+		    					<p class="d-flex">
+		    						<span>Discount</span>
+		    						<span>0.00 ks.</span>
+		    					</p>
+		    					<hr>
+		    					<p class="d-flex total-price">
+		    						<span>Total</span>
+		    						<span class="grand-total">$17.60</span>
+		    					</p>
+		    					<p class="mt-5"><a href="#"class="btn btn-primary py-3 px-4 btn-place-order">Place an order</a></p>
+								</div>
+	          	</div>
+	          	<div class="col-md-2"></div>
+	          </div>
+          </div> <!-- .col-md-8 -->
+        </div>
+      </div>
+    </section> <!-- .section -->
+    <th:block layout:fragment="js">
+    	<script th:src="@{/app/js/cart.js}"></script>
+    	<script th:src="@{/app/js/checkout.js}"></script>
+    </th:block>
+</body>
+</html>

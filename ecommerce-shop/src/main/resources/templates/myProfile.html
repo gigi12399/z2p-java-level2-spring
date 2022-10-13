@@ -1,0 +1,178 @@
+<!DOCTYPE html>
+<html lang="en"
+	xmlns:th="http://www.thymeleaf.org"
+	xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+	layout:decorate="~{storefront-template}"
+	th:with="title1='MyProfile',title2='Profile'">
+<head>
+	<title>Login</title>
+	<th:block layout:fragment="css">
+		<link rel="stylesheet" th:href="@{/app/css/style.css}" />
+		<style>
+			form.user .form-control-user{
+				border: none !important;
+				background-color: #f8f9fc !important;
+				border-bottom: 1px solid black !important;
+			}
+			div.profile-box {
+				background-color: #fff;
+				border: 1px inset #fff;
+			}
+			.dropdown-menu-custom {
+    			min-width: 20rem;
+			}
+		</style>
+	</th:block>
+</head>
+<body>
+	<section class="ftco-section ftco-cart content-color" layout:fragment="content-body">
+			<!-- Page Heading -->
+		<div class="d-flex justify-content-center">
+			<div class="text-center" style="width:50em;">
+				<h1 class="h3 mb-3 text-gray-800"><b>MyProfile setting</b></h1>
+				<hr />
+			</div>
+		</div>
+		
+		
+		<!-- Profile Form -->
+		<div class="row mt-5">
+			<div class="col-xl-5 col-md-4 col-12 mb-4">
+				<div class="d-flex justify-content-center">
+					<img width="150" height="150" th:src="@{${loginUser.photoPath}}" alt="" class="img-profile rounded-circle"/>
+				</div>
+				<div class="d-flex justify-content-center mb-3">
+					<ul class="navbar-nav">
+						<li layout:fragment="nav-profile" class="nav-item dropdown no-arrow">
+                            <a class="btn btn-upload btn-user px-4 mt-5 proImg nav-link dropdown-toggle" href="#" id="userDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                            	Upload Photo
+                            </a>
+                            <!-- Profile image -->
+                            <div class="dropdown-menu dropdown-menu-custom dropdown-menu-right shadow animated--grow-in"
+                                aria-labelledby="userDropdown">
+                                <form th:action="@{/shop/profileImg/change}" class="form" method="post" enctype="multipart/form-data">
+                                	<div class="form-group px-3">
+            							<label for="formFile" class="form-label">Choose Photos</label>
+  										<input style="border:none;" class="form-control" type="file" id="formFile" name="uploadPhoto" required="required">
+									</div>
+									<div class="d-flex justify-content-center">
+										<button class="btn btn-primary btn-user px-3">Save</button>
+									</div>
+                                </form>
+                            </div>
+                        </li>
+					</ul>
+				</div>
+			</div>
+			<!-- Profile form -->
+			<div class="col-xl-6 col-md-7 col-12">
+			<form th:action="@{/shop/profile/change}" class="form user" method="post" th:object="${loginUser}">
+			<input type="hidden" th:field="*{id}"/>
+			<input type="hidden" th:field="*{photo}" />
+			<input type="hidden" th:field="*{password}" />
+			<input type="hidden" th:field="*{status}" />
+			<input type="hidden" th:field="*{role}" />
+			<div class="row">
+				<div class="col-xl-6 col-md-6 col-12">
+					<div class="form-group">
+						<label for="" class="form-label">Name</label>
+             			<input th:field="*{name}" type="text" class="form-control form-control-user" placeholder="Enter Name...">
+            		</div>
+            	</div>
+            	<div class="col-xl-6 col-md-6 col-0"></div>
+			</div>
+			
+			<div class="row">
+				<div class="col-xl-6 col-md-6 col-0"></div>
+				<div class="col-xl-6 col-md-6 col-12">
+					<div class="form-group">
+            			<label for="" class="form-label">Phone</label>
+             			<input th:field="*{phone}" type="number" class="form-control form-control-user" placeholder="Enter Phone...">
+            		</div>
+            	</div>
+			</div>
+			
+			<div class="row">
+				<div class="col-xl-6 col-md-6 col-12">
+					<div class="form-group">
+						<label for="" class="form-label">Email</label>
+             			<input th:field="*{email}" type="text" class="form-control form-control-user" placeholder="Enter Email...">
+            		</div>
+				</div>
+				<div class="col-xl-6 col-0">
+					
+				</div>
+			</div>
+         	<div class="row">
+         		<div class="col-xl-6 col-md-6 col-0">
+         			
+            	</div>
+            	<div class="col-xl-6 col-md-6 col-12">
+            		<div class="form-group">
+						<label for="" class="form-label">Address</label>
+             			<input th:field="*{address}" type="text" class="form-control form-control-user" placeholder="Enter Address...">
+            		</div>
+            	</div>
+         	</div>
+         	<div class="row">
+				<div class="col-xl-6 col-md-6 col-12">
+					<div class="form-group">
+         			<label for="">Township</label> <br />
+         			<select th:field="*{availablePlace}" class="form-select form-control-user form-township-select" style="width:100%;padding:15px;border-radius:10rem;" aria-label="Default select example" >
+         				
+         				<th:block th:each="place: ${placeList}">
+         					<option th:value="${place.id}" th:text="${place.township} + ' , ' + ${place.city}"></option>
+         				</th:block>
+					</select>
+         		</div>
+				</div>
+				<div class="col-xl-6 col-md-6 col-0">
+					
+				</div>
+			</div>
+			
+            <div class="row">
+         		<div class="col-xl-6 col-md-6 col-0">
+         			
+            	</div>
+            	<div class="col-xl-6 col-md-6 col-12">
+            		<button class="btn btn-primary btn-user px-5 mt-5 float-left">Change</button>
+				</div>
+         	</div>
+       </form>
+			</div>
+			</div>
+		
+		<!-- change password and log out -->
+		<div class="row mt-5">
+			<div class="col-xl-5 col-md-5 col-12 profile-box ml-5 px-3 py-3">
+				<div class="row">
+					<div class="col-8">
+					<h5>Password</h5>
+					<small>You can reset or change your password by clicking here.</small>
+				</div>
+				<div class="col-4">
+					<a th:href="@{/forgetPassword}" class="btn btn-upload btn-user px-4 float-right">Change</a>
+				</div>
+				</div>
+			</div>
+			<div class="col-xl-1 col-md-1"></div>
+			<div class="col-xl-5 col-md-5 col-12 profile-box px-3 py-3">
+				<div class="row">
+					<div class="col-8">
+						<h5>Log Out</h5>
+						<small>Are you sure to log out, Please be certail.</small>
+					</div>
+					<div class="col-4">
+						<a href="#" class="a-log-out btn btn-deactivate btn-user px-4 float-right">Log Out</a>
+					</div>
+				</div>
+			</div>
+		</div>
+		<hr />
+		</section>
+		<th:block layout:fragment="js">
+    	<script th:src="@{/app/js/cart.js}"></script>
+    	</th:block>
+</body>
+</html>
